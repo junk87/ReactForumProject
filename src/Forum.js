@@ -13,6 +13,13 @@ export default class Forum extends React.Component {
       newContent: "",
     };
   }
+  handleDelete = (e) => {
+    e.preventDefault();
+    console.log(e.target.parentNode.id);
+    const newCommentList = this.state.commentList;
+    newCommentList.splice(e.target.parentNode.id, 1);
+    this.setState((state) => ({ commentList: newCommentList }));
+  };
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState((state) => ({
@@ -46,7 +53,10 @@ export default class Forum extends React.Component {
           為何二戰還會輸？
         </div>
         <br />
-        <CommentList commentList={this.state.commentList} />
+        <CommentList
+          commentList={this.state.commentList}
+          handleDelete={this.handleDelete}
+        />
         <br />
         <form action="GET" onSubmit={this.handleSubmit}>
           ID:

@@ -1,7 +1,5 @@
 import React from "react";
-function deleteComment(e) {
-  console.log("刪除");
-}
+
 export default class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -9,8 +7,8 @@ export default class Comment extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={deleteComment}>刪除</button>
+      <div id={this.props.id}>
+        <button onClick={this.props.handleDelete}>刪除</button>
         ID:{this.props.comment.userId}: {this.props.comment.content}
       </div>
     );

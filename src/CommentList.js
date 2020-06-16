@@ -6,11 +6,18 @@ export default class CommentList extends React.Component {
     super(props);
   }
   render() {
-    console.log(this.props);
     return (
       <div>
         {this.props.commentList.map((comment) => {
-          return <Comment key={comment.userId} comment={comment} />;
+          //console.log(this.props.commentList.indexOf(comment));
+          return (
+            <Comment
+              key={this.props.commentList.indexOf(comment)}
+              id={this.props.commentList.indexOf(comment)}
+              handleDelete={this.props.handleDelete}
+              comment={comment}
+            />
+          );
         })}
       </div>
     );
