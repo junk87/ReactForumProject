@@ -1,6 +1,35 @@
 import React from "react";
 import CommentList from "./CommentList.js";
 export default class Forum extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      commentList: [
+        { userId: "甲", content: "test" },
+        { userId: "乙", content: "測試" },
+        { userId: "丙", content: "test" },
+      ],
+      newUserId: "",
+      newContent: "",
+    };
+  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState((state) => ({
+      commentList: state.commentList.concat([
+        {
+          userId: state.newUserId,
+          content: state.newContent,
+        },
+      ]),
+    }));
+  };
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+    //this.setState((state, e) => {});
+  };
   render() {
     return (
       <div>
@@ -17,15 +46,24 @@ export default class Forum extends React.Component {
           為何二戰還會輸？
         </div>
         <br />
-        <CommentList />
+        <CommentList commentList={this.state.commentList} />
         <br />
-        <form action="GET">
+        <form action="GET" onSubmit={this.handleSubmit}>
           ID:
-          <input type="text" />
+          <input
+            type="text"
+            name="newUserId"
+            value={this.state.newUserId}
+            onChange={this.handleChange}
+          />
           <div>
             Comment:
             <br />
-            <textarea />
+            <textarea
+              name="newContent"
+              value={this.state.newContent}
+              onChange={this.handleChange}
+            />
           </div>
           <button type="submit">傳送</button>
         </form>

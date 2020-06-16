@@ -4,20 +4,13 @@ import Comment from "./Comment.js";
 export default class CommentList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      commentList: [
-        { id: "甲", content: "test" },
-        { id: "乙", content: "測試" },
-        { id: "丙", content: "test" },
-      ],
-    };
   }
-
   render() {
+    console.log(this.props);
     return (
       <div>
-        {this.state.commentList.map((comment) => {
-          return <Comment keys={comment.id} comment={comment} />;
+        {this.props.commentList.map((comment) => {
+          return <Comment key={comment.userId} comment={comment} />;
         })}
       </div>
     );
