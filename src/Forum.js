@@ -1,5 +1,7 @@
 import React from "react";
 import CommentList from "./CommentList.js";
+import ReactDOM from "react-dom";
+
 export default class Forum extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +13,7 @@ export default class Forum extends React.Component {
       ],
       newUserId: "",
       newContent: "",
+      newInput: "",
     };
   }
   handleDelete = (e) => {
@@ -30,12 +33,45 @@ export default class Forum extends React.Component {
         },
       ]),
     }));
+    console.log(this.state);
   };
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     });
     //this.setState((state, e) => {});
+  };
+  handleUpdate = (e) => {
+    var updateId = e.target.id;
+    var newCommentList = this.state.commentList;
+    newCommentList[e.target.parentNode.parentNode.id].content = e.target.value;
+    this.setState(() => ({ commentList: newCommentList }));
+    this.setState(() => ({ [updateId]: undefined }));
+    ReactDOM.unmountComponentAtNode(e.target.parentNode);
+    console.log(this.state);
+  };
+  inputChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+  changeToInput = (e) => {
+    console.log(this.state);
+    e.preventDefault();
+    var changeId = e.target.parentNode.id;
+    this.setState((state) => ({
+      ["edit" + changeId]: "",
+    }));
+    ReactDOM.render(
+      <input
+        onChange={this.inputChange}
+        value={this.state["edit" + changeId]}
+        id={"edit" + changeId}
+        onKeyPress={this.handleUpdate}
+      />,
+      document.getElementById("change" + changeId)
+    );
   };
   render() {
     return (
@@ -56,6 +92,8 @@ export default class Forum extends React.Component {
         <CommentList
           commentList={this.state.commentList}
           handleDelete={this.handleDelete}
+          handleUpdate={this.handleUpdate}
+          changeToInput={this.changeToInput}
         />
         <br />
         <form action="GET" onSubmit={this.handleSubmit}>

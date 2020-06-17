@@ -15,6 +15,8 @@ export default class CommentList extends React.Component {
               key={this.props.commentList.indexOf(comment)}
               id={this.props.commentList.indexOf(comment)}
               handleDelete={this.props.handleDelete}
+              handleUpdate={this.props.handleUpdate}
+              changeToInput={this.props.changeToInput}
               comment={comment}
             />
           );
